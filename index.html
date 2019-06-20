@@ -12,19 +12,40 @@
 </head>
 
 <body>
-    <p>guilherme</p>
     
-    <p>Kaio alterou</p>
+
 </body>
 
+<input placeholder="Digite Um Numero Aqui" type="number">
 
-
-
-
-
-
-
-
-
+<button>Clique Aqui</button>
 
 </html>
+
+<script>
+
+function pulaLinha() {
+
+    document.write("<br>");
+    document.write("<br>");
+
+}
+
+function mostra(frase) {
+
+    document.write(frase);
+    pulaLinha();
+
+}
+
+var A = 185;
+var B = 487;
+var C = 121;
+
+var total = (A * B) + C /3;
+
+
+mostra("numeros " + Math.round(total));
+
+
+</script>
