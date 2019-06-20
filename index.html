@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    
+
 
 </body>
 
@@ -24,35 +24,122 @@
 
 <script>
 
-function pulaLinha() {
+    function pulaLinha() {
 
-    document.write("<br>");
-    document.write("<br>");
+        document.write("<br>");
+        document.write("<br>");
 
-}
+    }
 
-function mostra(frase) {
+    function mostra(frase) {
+        document.write(frase);
+        pulaLinha();
+    }
 
-    document.write(frase);
-    pulaLinha();
+    var operadoresValidos = {
+        soma: '+',
+        divisao: '/',
+        multiplicacao: '*',
+        subtracao: '-'
+    }
 
-}
+    function calcula(valor1, valor2, operador) {
+        if (['+', '-', '*', '/'].includes(operador)) { 
+            if (valor2 === 0) {
+                throw new Error('Não é possível dividir por zero');
+            }
+            return eval(valor1.toString() + operador + valor2.toString())
+        } else {
+            throw new Error("Operador inválido");
 
-var A = 185;
-var B = 487;
-var C = 121;
+        }
 
-var total = (A * B) + C /3;
+    }
 
 
-mostra("numeros " + Math.round(total));
 
-// CENÁRIO 1: SOMA
-var resposta = calcula(3, 5, '+');
-if (resposta === (3 + 5)) {
-    mostra('Certo')
-} else {
-    mostra('Errado')
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // ============= TESTES =================
+
+
+    testSuite();
+
+    // CENÁRIO 1: SOMA
+    function testSuite() {
+
+        somaTest();
+        subtracaoTest();
+        divisaoTest();
+        multiplicacaoTest();
+        calculadoraTest();
+
+        function somaTest() {
+            criarCasoDeTeste('SomaTeste', (3 + 2), calcula(3, 2, operadoresValidos.soma));
+        }
+
+        function subtracaoTest() {
+            criarCasoDeTeste('SubtracaoTeste', (3 - 2), calcula(3, 2, operadoresValidos.subtracao));
+        }
+
+        function divisaoTest() {
+            criarCasoDeTeste('DivisaoTeste: deve dividir um numero pelo outro', (15 / 5), calcula(15, 5, operadoresValidos.divisao));
+            try {
+                calcula(15, 0, operadoresValidos.divisao);
+                mostra('DivisaoTeste: nao deve dividir por zero: Errado')
+            } catch (ex) {
+                if (ex.message === 'Não é possível dividir por zero') {
+                    mostra('DivisaoTeste: nao deve dividir por zero: Certo')
+                } else {
+                    mostra('DivisaoTeste: nao deve dividir por zero: Errado.')
+                }
+            }
+        }
+
+        function calculadoraTest() {
+            const msg = 'Operador inválido'
+            try {
+                calcula(1, 1, 'ble');
+                mostra('OperadorInvalidoTeste: Errado')
+            } catch (ex) {
+                if (ex.message === msg) {
+                    mostra('OperadorInvalidoTeste: Certo')
+                } else {
+                    mostra('OperadorInvalidoTeste: Errado. Esperava "' + msg + '" e recebeu "' + ex.message + '"')
+                }
+            }
+        }
+
+        function multiplicacaoTest() {
+            try {
+                criarCasoDeTeste('MultipliacaoTeste', (3 * 5), calcula(3, 5, '*'));
+            } catch (ex) {
+                mostra('MultiplicacaoTeste: Errado. falha ao executar')
+            }
+        }
+
+    }
+
+    function criarCasoDeTeste(nomeTeste, resultadoEsperado, resultadoRecebido) {
+        if (resultadoEsperado === resultadoRecebido) {
+            mostra(nomeTeste + ': Certo')
+        } else {
+            mostra(nomeTeste + ': Errado. Esperava receber ' + resultadoEsperado + ' mas recebeu ' + resultadoRecebido);
+        }
+    }
 
 </script>
